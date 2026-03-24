@@ -1,10 +1,18 @@
-from google.adk.agents.llm_agent import Agent
+"""Google Search Agent definition for ADK Gemini Live API Toolkit demo."""
+
+import os
+
+from google.adk.agents import Agent
 from google.adk.tools import google_search
 
-root_agent = Agent(
-    model='gemini-2.5-flash',
-    name='root_agent',
-    description='A helpful assistant for user questions.',
-    instruction='Answer user questions to the best of your knowledge',
+# Default models for Live API with native audio support:
+# - Gemini Live API: gemini-2.5-flash-native-audio-preview-12-2025
+# - Vertex AI Live API: gemini-live-2.5-flash-native-audio
+agent = Agent(
+    name="google_search_agent",
+    model=os.getenv(
+        "DEMO_AGENT_MODEL", "gemini-2.5-flash-native-audio-preview-12-2025"
+    ),
     tools=[google_search],
+    instruction="You are a helpful assistant that can search the web.",
 )
